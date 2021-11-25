@@ -1,11 +1,19 @@
 import express from "express";
+import swaggerUi from "swagger-ui-express";
+
+import { router } from "./routes";
+import swaggerFile from "./swagger.json";
+
+import "./database";
 
 const app = express();
 
-app.get("/", (req, res) => {
-  res.json({ message: "Hello rrrr" });
-});
+app.use(express.json());
 
-app.listen(3000, () => {
-  console.log("Server is running on");
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerFile));
+
+app.use(router);
+
+app.listen(3333, () => {
+  console.log("Server is run ");
 });
